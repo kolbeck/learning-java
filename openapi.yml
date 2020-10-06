@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: Learning Go API
+  description: Want to learn go and need an API for my react learnings.
+  version: 0.1.9
+servers:
+  - url: http://localhost:8080/v1
+    description: Development
+paths:
+  /items:
+    get:
+      summary: Returns a list of items.
+      description: The summary explains it pretty well. Returning at bunch of items.
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: Query string to filter the result on.
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+          description: The number of items to skip before starting to collect the result set.
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 10
+          description: The numbers of items to return.
+      responses:
+        '200':
+          description: Yea, boy! Shit worked and you're getting those items you were promised.
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/items_response'
+components:
+  schemas:
+    items_response:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/item'
+    item:
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+      required:  
+        - id
+        - name
