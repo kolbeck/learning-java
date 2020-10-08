@@ -13,8 +13,23 @@ import xyz.kolbeck.learning.java.gen.item.model.ItemsResponse;
 public class ApiController {
     @GetMapping("/")
     public ResponseEntity<ItemsResponse> getItems() {
-        ItemsResponse r = new ItemsResponse();
-        r.setItems(new LinkedList<Item>());
-        return ResponseEntity.ok(r);
+        return ResponseEntity.ok(createStaticResponse());
+    }
+
+    private ItemsResponse createStaticResponse() {
+        var r = new ItemsResponse();
+        for(var i = 0; i < 3; i++)
+            r.addItemsItem(createStaticItem((i + 1) + ""));
+
+        return r;
+    }
+
+    private Item createStaticItem(String id) {
+        var i = new Item();
+        i.setId(id);
+        i.setTitle("This Is Fantastic");
+        i.setDescription("And by fantastic we mean great.");
+        // https://picsum.photos/200/300
+        return i;
     }
 }
