@@ -13,7 +13,9 @@ import xyz.kolbeck.learning.java.gen.item.model.ItemsResponse;
 public class ApiController {
     @GetMapping("/")
     public ResponseEntity<ItemsResponse> getItems() {
-        return ResponseEntity.ok(createStaticResponse());
+        return ResponseEntity.ok()
+	      .header("Access-Control-Allow-Origin", "http://localhost:3000")
+	      .body(createStaticResponse());
     }
 
     private ItemsResponse createStaticResponse() {
@@ -29,7 +31,7 @@ public class ApiController {
         i.setId(id);
         i.setTitle("This Is Fantastic");
         i.setDescription("And by fantastic we mean great.");
-        // https://picsum.photos/200/300
+        i.setImageUrl("https://picsum.photos/600/400");
         return i;
     }
 }
